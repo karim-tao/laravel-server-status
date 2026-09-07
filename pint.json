@@ -1,0 +1,16 @@
+{
+    "preset": "laravel",
+    "rules": {
+        "control_structure_braces": false,
+        "concat_space": {
+            "spacing": "one"
+        },
+        "class_attributes_separation": false,
+        "fully_qualified_strict_types": {
+            "import_symbols": true
+        },
+        "global_namespace_import": {
+            "import_classes": true
+        }
+    }
+}

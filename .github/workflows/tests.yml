@@ -1,0 +1,41 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        php: ['8.3', '8.4', '8.5']
+        laravel: ['12', '13']
+        livewire: ['3', '4']
+        include:
+          - laravel: '12'
+            testbench: '10'
+          - laravel: '13'
+            testbench: '11'
+
+    name: ${{ matrix.os }} - PHP ${{ matrix.php }} - Laravel ${{ matrix.laravel }} - Livewire ${{ matrix.livewire }}
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: pcov
+
+      - name: Install dependencies
+        run: |
+          composer require "laravel/framework:^${{ matrix.laravel }}" "orchestra/testbench:^${{ matrix.testbench }}" "livewire/livewire:^${{ matrix.livewire }}" --no-interaction --no-update
+          composer update --prefer-dist --no-interaction --no-progress
+
+      - name: Run tests
+        run: composer test
