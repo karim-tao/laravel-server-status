@@ -1,6 +1,6 @@
 {
     "name": "karim-tao/laravel-server-status",
-    "description": "A Livewire card that shows the current state of the server running your Laravel app: CPU, load, memory, disk, uptime and PHP-FPM processes. No daemon, no history, no database.",
+    "description": "Current CPU, load, memory, disk, uptime and PHP processes of the server running your Laravel app, as a Livewire component or in code. No daemon, no history, no database.",
     "type": "library",
     "keywords": [
         "laravel",
@@ -61,7 +61,7 @@
         "test:lint": "pint --test",
         "test:static": "phpstan analyse",
         "test:type-coverage": "pest --type-coverage --min=100",
-        "test:unit": "pest --parallel",
+        "test:unit": "pest",
         "test": [
             "@test:lint",
             "@test:static",

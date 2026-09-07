@@ -30,12 +30,16 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
+          extensions: fileinfo
           coverage: pcov
 
       - name: Install dependencies
+        shell: bash
         run: |
-          composer require "laravel/framework:^${{ matrix.laravel }}" "orchestra/testbench:^${{ matrix.testbench }}" "livewire/livewire:^${{ matrix.livewire }}" --no-interaction --no-update
+          composer require "laravel/framework:${{ matrix.laravel }}.*" "livewire/livewire:${{ matrix.livewire }}.*" --no-interaction --no-update
+          composer require "orchestra/testbench:${{ matrix.testbench }}.*" --dev --no-interaction --no-update
           composer update --prefer-dist --no-interaction --no-progress
 
       - name: Run tests
+        shell: bash
         run: composer test

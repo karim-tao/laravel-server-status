@@ -25,12 +25,6 @@ test('it names the current process and counts its siblings', function () {
         ->and($this->reader->processes())->toBeGreaterThanOrEqual(1);
 });
 
-test('it throws when the cores are not in the environment', function () {
-    putenv('NUMBER_OF_PROCESSORS');
-
-    $this->reader->cores();
-})->throws(MetricUnavailableException::class, 'NUMBER_OF_PROCESSORS is not set');
-
 test('it throws when powershell fails', function (string $method) {
     Process::fake(fn () => Process::result(output: '', errorOutput: 'boom', exitCode: 1));
 

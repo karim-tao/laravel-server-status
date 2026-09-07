@@ -1,5 +1,3 @@
-@use('Illuminate\Support\Number')
-
 <div class="server-status" wire:poll.5s="refresh">
     <style>
         .server-status *, .server-status *::before, .server-status *::after { box-sizing: border-box; }
@@ -34,13 +32,13 @@
         <div class="card">
             <dt>Memory</dt>
             <dd class="value">{{ round($memory_used / $memory_total * 100) }}%</dd>
-            <dd class="detail">{{ Number::fileSize($memory_used, 1) }} of {{ Number::fileSize($memory_total, 1) }}</dd>
+            <dd class="detail">{{ round($memory_used / 1073741824, 1) }} of {{ round($memory_total / 1073741824, 1) }} GB</dd>
         </div>
 
         <div class="card">
             <dt>Disk</dt>
             <dd class="value">{{ round($disk_used / $disk_total * 100) }}%</dd>
-            <dd class="detail">{{ Number::fileSize($disk_used, 1) }} of {{ Number::fileSize($disk_total, 1) }}</dd>
+            <dd class="detail">{{ round($disk_used / 1073741824, 1) }} of {{ round($disk_total / 1073741824, 1) }} GB</dd>
         </div>
 
         <div class="card">

@@ -22,7 +22,7 @@ final class WindowsReader extends Reader
     {
         $cores = getenv('NUMBER_OF_PROCESSORS');
 
-        if ($cores === false) {
+        if ($cores === false || $cores === '') {
             throw MetricUnavailableException::for('cores', 'NUMBER_OF_PROCESSORS is not set');
         }
 
@@ -31,9 +31,9 @@ final class WindowsReader extends Reader
 
     public function memory(): array
     {
-        $output = $this->read('$os = Get-CimInstance Win32_OperatingSystem; "$($os.TotalVisibleMemorySize) $($os.FreePhysicalMemory)"', 'memory');
+        $output = $this->read('$os = Get-CimInstance Win32_OperatingSystem; $os.TotalVisibleMemorySize; $os.FreePhysicalMemory', 'memory');
 
-        if (! preg_match('/^(\d+) (\d+)$/', $output, $match)) {
+        if (! preg_match('/^(\d+)\s+(\d+)$/', $output, $match)) {
             throw MetricUnavailableException::for('memory', 'Win32_OperatingSystem printed no memory sizes: ' . $output);
         }
 
